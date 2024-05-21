@@ -1,0 +1,56 @@
+#docker network create --driver=bridge --subnet 172.20.0.0/16 --gateway 172.20.0.1 melon-net
+services:
+  # user_service:
+  #   image: your_user_service_image
+  #   ports:
+  #     - "8001:8001"
+  #   depends_on:
+  #     - user_db
+
+  user_db:
+    image: postgis/postgis:latest
+    container_name: bike_user_db
+    networks:
+      - melon-net
+    restart: always
+    ports:
+      - "15433:5432"
+    env_file:
+      - .env.bike_db
+    volumes:
+      - ./bike_user_db:/var/lib/postgresql/data
+
+  # gps_service:
+  #   image: your_gps_service_image
+  #   ports:
+  #     - "8002:8002"
+  #   depends_on:
+  #     - gps_db
+
+  # gps_db:
+  #   image: mysql:latest
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #     MYSQL_DATABASE: gpsdb
+  #   ports:
+  #     - "3307:3306"
+
+  # segment_service:
+  #   image: your_segment_service_image
+  #   ports:
+  #     - "8003:8003"
+  #   depends_on:
+  #     - segment_db
+
+  # segment_db:
+  #   image: mysql:latest
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: example
+  #     MYSQL_DATABASE: segmentdb
+  #   ports:
+  #     - "3308:3306"
+
+networks:
+  melon-net:
+    name: melon-net
+    external: true
