@@ -1,0 +1,41 @@
+services:
+  graphhopper:
+    build: .                 # 위 Dockerfile 위치
+    image: my-graphhopper:sk # 레지스트리 push 시 태그 지정
+    ports:
+      - "28989:8989"
+    restart: unless-stopped
+
+  ## 2) 데이터베이스 – PostGIS
+#  db:
+#    build:
+#      context: ./postgis
+#      dockerfile: DockerFile
+#    image: custom-postgis
+#    container_name: gh_postgis
+#    environment:
+#      POSTGRES_DB: comfort
+#      POSTGRES_USER: comfort
+#      POSTGRES_PASSWORD: secret
+#    volumes:
+#      - ./pgdata:/var/lib/postgresql/data
+#    ports:
+#      - "25432:5432"
+#    restart: unless-stopped
+
+  ## 3) Ride Service – FastAPI + SQLAlchemy + Alembic
+#  ride-service:
+#    build: ./backend
+#    container_name: ride-service
+#    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+#    environment:
+#      DATABASE_URL: postgresql+psycopg://comfort:secret@db:5432/comfort
+#      ROUTING_URL: http://graphhopper:8989
+#    volumes:
+#      - ./backend:/app
+#    ports:
+#      - "28000:8000"
+#    depends_on:
+#      - db
+#      - graphhopper
+#    restart: unless-stopped
