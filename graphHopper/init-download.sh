@@ -1,0 +1,1 @@
+wget https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/10.0/graphhopper-web-10.0.jar https://raw.githubusercontent.com/graphhopper/graphhopper/10.x/config-example.yml

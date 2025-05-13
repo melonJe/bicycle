@@ -374,4 +374,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,visualstudiocode,pycharm,kotlin,python
 .idea
 /graphHopper/south-korea-latest.osm.pbf
-/graphHopper/state.txt
+state.txt
