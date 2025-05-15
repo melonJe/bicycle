@@ -1,0 +1,7 @@
+services:
+  graphhopper:
+    build: graphHopper                 # 위 Dockerfile 위치
+    image: my-graphhopper:sk # 레지스트리 push 시 태그 지정
+    ports:
+      - "28989:8989"
+    restart: unless-stopped
