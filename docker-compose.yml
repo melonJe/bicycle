@@ -1,7 +1,22 @@
 services:
   graphhopper:
     build: graphHopper                 # 위 Dockerfile 위치
-    image: my-graphhopper:sk # 레지스트리 push 시 태그 지정
+    image: my-graphhopper:latest
+    container_name: graphhopper
     ports:
       - "28989:8989"
-    restart: unless-stopped
+    restart: always
+
+    bike-backend:
+      build: backend
+      image: bike-backend:latest
+      container_name: bike-backend
+      restart: always
+      ports:
+        - "28000:8000"
+      env_file:
+        - .env
+      environment:
+        - TZ=Asia/Seoul
+      depends_on:
+        - graphhopper
