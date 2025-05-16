@@ -7,7 +7,7 @@ COPY graphhopper-web-10.0.jar .
 COPY config.yml .
 
 # PBF 내려받기 (또는 COPY)
-ADD https://download.geofabrik.de/asia/south-korea-latest.osm.pbf /data/south-korea.pbf
+ADD https://download.geofabrik.de/asia/south-korea-latest.osm.pbf /data/south-korea-latest.osm.pbf
 
 # 그래프 생성
 RUN java -Xmx6g -Xms6g -jar graphhopper-web-10.0.jar \
