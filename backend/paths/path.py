@@ -6,8 +6,9 @@ from config import setting_env
 paths_router = APIRouter()
 
 
-@paths_router.get("/loop")
+@paths_router.get("")
 async def get_circular_route(
+        type: str = Query("loop", description="경로 type"),
         minutes: int = Query(30, gt=0, description="주행 소요시간(분)"),
         lat: float = Query(..., description="출발점 위도"),
         lon: float = Query(..., description="출발점 경도"),
@@ -23,11 +24,13 @@ async def get_circular_route(
         ("algorithm", "round_trip"),
         ("ch.disable", "true"),
         ("round_trip.distance", minutes * 250),  # 15Km/h == 250m/min
+        # ("points_encoded", "false")
     ]
 
     if not points_encoded:
-        params += ("points_encoded", "false")
+        params += [("points_encoded", "false")]
 
+    print(params)
     async with httpx.AsyncClient() as client:
         print(setting_env.URL)
         response = await client.get(setting_env.URL + "/route", params=params)
@@ -37,6 +40,8 @@ async def get_circular_route(
 
     data = response.json()
     points = data["paths"][0]["points"]
+    if not points_encoded:
+        points = points["coordinates"]
 
     return points
 
