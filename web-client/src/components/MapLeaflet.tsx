@@ -2,7 +2,6 @@ import {MapContainer, Polyline, TileLayer, useMapEvents,} from 'react-leaflet'
 import type {LatLngExpression} from 'leaflet'
 import React, {useEffect, useRef, useState} from 'react'
 import 'leaflet/dist/leaflet.css'
-import * as S from '@/styles/contextMenu.styled'
 import {loopRoute} from '@/utils/route'
 
 interface LoopPathLeafletProps {
@@ -58,7 +57,7 @@ export default function MapLeaflet({initialPosition}: LoopPathLeafletProps) {
             {/* 1) 지도 렌더링 */}
             <MapContainer
                 center={initialPosition}
-                zoom={17}
+                zoom={18}
                 whenReady={() => {
                     mapRef.current = route
                 }}
@@ -71,12 +70,6 @@ export default function MapLeaflet({initialPosition}: LoopPathLeafletProps) {
                 {route && (
                     <>
                         <Polyline positions={route} pathOptions={{color: 'blue', weight: 4}}/>
-                        {/*<Marker position={route[0]}>*/}
-                        {/*    <Popup>Start</Popup>*/}
-                        {/*</Marker>*/}
-                        {/*<Marker position={route[route.length - 1]}>*/}
-                        {/*    <Popup>End</Popup>*/}
-                        {/*</Marker>*/}
                     </>
                 )}
             </MapContainer>
@@ -84,16 +77,31 @@ export default function MapLeaflet({initialPosition}: LoopPathLeafletProps) {
             {/* 3) 우클릭 시 나타나는 커스텀 메뉴 */}
             {menuPos && (
                 // <ContextMenu x={menuPos.x} y={menuPos.y}></ContextMenu>
-                <S.Wrapper
-                    x={`${menuPos.x}`}
-                    y={`${menuPos.y}`}
+                <div
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                        position: 'absolute',
+                        left: `${menuPos.x}px`,
+                        top: `${menuPos.y}px`,
+                        zIndex: 1000,
+                        width: '200px',
+                    }}
                 >
-                    <S.Menu>
-                        <S.Item>
-                            <S.Span onClick={handleEatRoute}>loop</S.Span>
-                        </S.Item>
-                    </S.Menu>
-                </S.Wrapper>
+                    <div className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <button onClick={handleEatRoute} aria-current="true" type="button"
+                                className="w-full px-4 py-2 font-medium text-left rtl:text-right border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
+                            Loop Route
+                        </button>
+                        <button type="button"
+                                className="w-full px-4 py-2 font-medium text-left rtl:text-right border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
+                            Menu2
+                        </button>
+                        <button type="button"
+                                className="w-full px-4 py-2 font-medium text-left rtl:text-right border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
+                            Menu3
+                        </button>
+                    </div>
+                </div>
             )}
         </div>
     )
