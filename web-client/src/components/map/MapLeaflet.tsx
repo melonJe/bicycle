@@ -61,7 +61,7 @@ export default function MapLeaflet({initialPosition}: LoopPathLeafletProps) {
                 whenReady={() => {
                     mapRef.current = route
                 }}
-                style={{width: '100%', height: '100%'}}
+                style={{width: '100%', height: '100%', zIndex: "0"}}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
                 <ContextHandler/>
