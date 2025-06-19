@@ -1,6 +1,6 @@
 services:
   graphhopper:
-    build: graphHopper                 # 위 Dockerfile 위치
+    build: graphHopper/Dockerfile.graphHopper
     image: my-graphhopper:latest
     container_name: graphhopper
     ports:
@@ -8,7 +8,7 @@ services:
     restart: always
 
   bike-backend:
-    build: backend
+    build: Dockerfile.backend
     image: bike-backend:latest
     container_name: bike-backend
     restart: always
